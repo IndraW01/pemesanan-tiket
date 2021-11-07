@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FilmController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::redirect('/', '/films');
+
+Route::prefix('/films')->middleware('guest')->name('films.')->group(function() {
+    Route::get('/', [FilmController::class, 'index'])->name('index');
+    Route::get('/{film:title}', [FilmController::class, 'show'])->name('show');
 });

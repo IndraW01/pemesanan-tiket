@@ -20,6 +20,7 @@
     <!-- APP CSS -->
     <link rel="stylesheet" href="/css/grid.css">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -27,14 +28,17 @@
     @include('Partials.navbar')
     <!-- END NAV -->
 
+    @if (request()->routeIs('films.index'))
     <!-- HERO SECTION -->
     @include('Partials.hero')
     <!-- END HERO SECTION -->
+    @endif
 
     {{-- Content Film --}}
     @yield('content')
     {{-- End Content Film --}}
 
+    @if (request()->routeIs('films.index'))
     <!-- SPECIAL MOVIE SECTION -->
     <div class="section">
         <div class="hero-slide-item">
@@ -75,6 +79,7 @@
         </div>
     </div>
     <!-- END SPECIAL MOVIE SECTION -->
+    @endif
 
     <!-- FOOTER SECTION -->
     <footer class="section">

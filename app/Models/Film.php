@@ -9,5 +9,12 @@ class Film extends Model
 {
     use HasFactory;
 
+    protected $with = ['categories'];
+
     protected $guarded = [];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
