@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class FilmController extends Controller
@@ -21,6 +22,14 @@ class FilmController extends Controller
         return view('Films.show', [
             'film' => $film,
             'category' => $film->categories->pluck('nama_category')->map(fn($value) => "$value")->implode(', ')
+        ]);
+    }
+
+    public function schedule(Film $film)
+    {
+        return view('Films.schedule', [
+            'film' => $film,
+            'schedules' => Schedule::all()
         ]);
     }
 }

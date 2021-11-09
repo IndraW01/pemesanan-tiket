@@ -1,8 +1,28 @@
 h3.title-show{
     color: #f14e3c;
 }
+
+table {
+    margin-left: -10px;
+}
+
 a.buy{
     border-radius: 0;
     padding: 10px 99px;
     background-color: #c0392b;
+}
+
+.title-modal {
+    /* z-index: 2; */
+    color: black;
+}
+
+/* Login */
+.form {
+    padding: 20px;
+    background-color: #221f1f;
+    border-radius: 6px;
+}
+.register:hover {
+    color: #f14e3c;
 }

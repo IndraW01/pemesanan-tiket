@@ -15,12 +15,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
     <!-- BOX ICONS -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
     {{-- Bootsrap CSS --}}
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+
     <!-- APP CSS -->
     <link rel="stylesheet" href="/css/grid.css">
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/style.css">
+
+    {{-- Sweet ALert 2 --}}
+    <link rel="stylesheet" href="/css/sweetalert2.min.css">
 </head>
 
 <body>
@@ -29,9 +34,9 @@
     <!-- END NAV -->
 
     @if (request()->routeIs('films.index'))
-    <!-- HERO SECTION -->
-    @include('Partials.hero')
-    <!-- END HERO SECTION -->
+        <!-- HERO SECTION -->
+        @include('Partials.hero')
+        <!-- END HERO SECTION -->
     @endif
 
     {{-- Content Film --}}
@@ -39,46 +44,46 @@
     {{-- End Content Film --}}
 
     @if (request()->routeIs('films.index'))
-    <!-- SPECIAL MOVIE SECTION -->
-    <div class="section">
-        <div class="hero-slide-item">
-            <img src="/images/transformer-banner.jpg" alt="">
-            <div class="overlay"></div>
-            <div class="hero-slide-item-content">
-                <div class="item-content-wraper">
-                    <div class="item-content-title">
-                        Transformer
-                    </div>
-                    <div class="movie-infos">
-                        <div class="movie-info">
-                            <i class="bx bxs-star"></i>
-                            <span>9.5</span>
+        <!-- SPECIAL MOVIE SECTION -->
+        <div class="section">
+            <div class="hero-slide-item">
+                <img src="/images/transformer-banner.jpg" alt="">
+                <div class="overlay"></div>
+                <div class="hero-slide-item-content">
+                    <div class="item-content-wraper">
+                        <div class="item-content-title">
+                            Transformer
                         </div>
-                        <div class="movie-info">
-                            <i class="bx bxs-time"></i>
-                            <span>120 mins</span>
+                        <div class="movie-infos">
+                            <div class="movie-info">
+                                <i class="bx bxs-star"></i>
+                                <span>9.5</span>
+                            </div>
+                            <div class="movie-info">
+                                <i class="bx bxs-time"></i>
+                                <span>120 mins</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>HD</span>
+                            </div>
+                            <div class="movie-info">
+                                <span>16+</span>
+                            </div>
                         </div>
-                        <div class="movie-info">
-                            <span>HD</span>
+                        <div class="item-content-description">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, possimus eius. Deserunt non odit, cum vero reprehenderit laudantium odio vitae autem quam, incidunt molestias ratione mollitia accusantium, facere ab suscipit.
                         </div>
-                        <div class="movie-info">
-                            <span>16+</span>
+                        <div class="item-action">
+                            <a href="#" class="btn btn-hover">
+                                <i class="bx bxs-right-arrow"></i>
+                                <span>Watch now</span>
+                            </a>
                         </div>
-                    </div>
-                    <div class="item-content-description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, possimus eius. Deserunt non odit, cum vero reprehenderit laudantium odio vitae autem quam, incidunt molestias ratione mollitia accusantium, facere ab suscipit.
-                    </div>
-                    <div class="item-action">
-                        <a href="#" class="btn btn-hover">
-                            <i class="bx bxs-right-arrow"></i>
-                            <span>Watch now</span>
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- END SPECIAL MOVIE SECTION -->
+        <!-- END SPECIAL MOVIE SECTION -->
     @endif
 
     <!-- FOOTER SECTION -->
@@ -177,11 +182,39 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- OWL CAROUSEL -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+
     {{-- BOOTSRAP JS --}}
     <script src="js/bootstrap.min.js"></script>
+
     <!-- APP SCRIPT -->
     <script src="/js/app.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> --}}
 
+    {{-- Sweet Alert --}}
+    <script src="/js/sweetalert2.min.js"></script>
+
+    {{-- Coba Sweet Alert --}}
+    <script>
+        var flash = $('#flash').data('flash');
+        @if (session()->has('status') && session('status') == 'success')
+            if(flash) {
+                Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: flash,
+                })
+            }
+        @elseif (session()->has('status') && session('status') == 'failed')
+            if(flash) {
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: flash,
+                })
+            }
+        @endif
+
+    </script>
 </body>
 
 </html>

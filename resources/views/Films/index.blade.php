@@ -6,6 +6,9 @@
 <!-- NOW PLAYING SECTION -->
 <div class="section">
     <div class="container">
+        @if (session()->has('status'))
+            <div id="flash" data-flash="{{ session()->get('value') }}"></div>
+        @endif
         <div class="section-header">
             Now Playing
         </div>

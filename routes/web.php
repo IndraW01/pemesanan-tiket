@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +18,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/films');
 
-Route::prefix('/films')->middleware('guest')->name('films.')->group(function() {
+Route::prefix('/films')->name('films.')->group(function() {
     Route::get('/', [FilmController::class, 'index'])->name('index');
     Route::get('/{film:title}', [FilmController::class, 'show'])->name('show');
+    Route::get('/{film:title}/schedule', [FilmController::class, 'schedule'])->name('schedule');
+});
+
+Route::get('/chair', function () {
+    echo "tes";
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
+    Route::post('/logout', [LoginController::class, 'logout'])->withoutMiddleware('guest')->middleware('auth')->name('logout.logout');
+
+    Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 });
