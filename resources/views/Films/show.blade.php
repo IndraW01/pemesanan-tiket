@@ -3,15 +3,24 @@
 
 @section('content')
 <div class="container mt-5">
-    <div class="section-header">
-        {{ $film->playing }}
+    @if (session()->has('status'))
+        <div id="flash" data-flash="{{ session()->get('value') }}"></div>
+    @endif
+
+    <div class="row justify-content-center">
+        <div class="col-md-2">
+            <div class="section-header">
+                {{ $film->playing }}
+            </div>
+        </div>
     </div>
-    <div class="row">
+
+    <div class="row justify-content-center align-items-center">
         <div class="col-md-4">
             <img src="/images/cartoons/demon-slayer.jpg" alt="" width="287" height="421">
             <a href="{{ route('films.schedule', ['film' => $film->title]) }}" class="btn buy">Buy Ticket</a>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <h3 class="mb-3 title-show">{{ $film->title }}</h3>
             <table class="table text-white table-borderless">
                 <tr class="mb-3">

@@ -22,10 +22,8 @@ Route::prefix('/films')->name('films.')->group(function() {
     Route::get('/', [FilmController::class, 'index'])->name('index');
     Route::get('/{film:title}', [FilmController::class, 'show'])->name('show');
     Route::get('/{film:title}/schedule', [FilmController::class, 'schedule'])->name('schedule');
-});
-
-Route::get('/chair', function () {
-    echo "tes";
+    Route::post('/chair', [FilmController::class, 'chair'])->middleware('auth')->name('chair');
+    Route::get('/chair/view', [FilmController::class, 'chairview'])->middleware('auth')->name('chairview');
 });
 
 Route::middleware('guest')->group(function () {
