@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,15 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Halaman Film
 Route::redirect('/', '/films');
 
 Route::prefix('/films')->name('films.')->group(function() {
     Route::get('/', [FilmController::class, 'index'])->name('index');
     Route::get('/{film:title}', [FilmController::class, 'show'])->name('show');
     Route::get('/{film:title}/schedule', [FilmController::class, 'schedule'])->name('schedule');
-    Route::post('/chair', [FilmController::class, 'chair'])->middleware('auth')->name('chair');
-    Route::get('/chair/view', [FilmController::class, 'chairview'])->middleware('auth')->name('chairview');
 });
+
+Route::get('/films/{film:title}/checkout', [FilmController::class, 'chair'])->middleware('auth')->name('films.checkout');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login.index');
@@ -34,4 +37,12 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
     Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+});
+
+
+// Halaman Dashboard User
+Route::prefix('/dashboard/user')->middleware('auth')->name('dashboard.user.')->group(function() {
+    Route::get('/', [DashboardUserController::class, 'index'])->name('index');
+    Route::get('/profile', [UserController::class, 'index'])->name('profile');
+    Route::get('/wallet', [UserController::class, 'wallet'])->name('wallet');
 });

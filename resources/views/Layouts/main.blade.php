@@ -214,6 +214,15 @@
             }
         @endif
 
+        @if (request()->has('ticket'))
+            $('input[type=checkbox]').on('change', function(evt) {
+                if($('input[id=seats]:checked').length > {{ request('ticket') }}) {
+                    this.checked = false;
+                }
+            });
+        @endif
+
+
     </script>
 </body>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Film;
 use App\Models\Schedule;
+use App\Models\Seat;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -37,19 +38,14 @@ class FilmController extends Controller
         ]);
     }
 
-    public function chair(Request $request)
+    public function chair(Request $request, Film $film)
     {
-        // dd('yes');
-
-        $request->session()->put('data', $request->all());
-        return redirect()->route('films.chairview');
+        return view('Films.checkout', [
+            'film' => $film,
+            'ticket' => $request->ticket,
+            'seatsA' => Seat::where('seat', 'A')->get()->pluck('no_bangku'),
+            'seatsB' => Seat::where('seat', 'B')->get()->pluck('no_bangku'),
+        ]);
     }
 
-    public function chairview()
-    {
-        // dd(session('data'));
-        $data = session('data');
-        // session()->forget('data');
-        dump($data);
-    }
 }

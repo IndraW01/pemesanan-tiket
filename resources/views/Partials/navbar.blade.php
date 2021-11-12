@@ -8,7 +8,7 @@
                 <li><a href="{{ route('films.index') }}">Home</a></li>
                 <li><a href="#">Genre</a></li>
                 @auth
-                    <li><a href="#">Profile</a></li>
+                    <li><a href="{{ route('dashboard.user.index') }}">Profile</a></li>
                     <li>
                         <form action="{{ route('logout.logout') }}" method="POST">
                             @csrf

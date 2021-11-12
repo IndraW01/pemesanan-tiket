@@ -1,4 +1,4 @@
-{{-- @dd($dateNow) --}}
+
 @extends('Layouts.main')
 
 @section('content')
@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-2">
             <div class="section-header">
-                Chekout Now
+                Schedule
             </div>
         </div>
     </div>
@@ -23,14 +23,14 @@
         <div class="col-md-4">
             <h3 class="mb-3 text-white">{{ $film->title }}</h3>
             <p class="fs-5"><i class='bx-fw bx bx-time-five bx-sm'></i> {{ $film->durasi }} Minutes</p>
+            <p class="fs-5"><i class='bx-fw bx bx-money bx-sm'></i> Rp {{ $film->harga }}</p>
             <span class="btn btn-sm disabled me-2" style="border: 1px solid rgba(255 ,255 ,255, 0.5);">2D</span>
             <span class="btn btn-sm disabled" style="border: 1px solid rgba(255 ,255 ,255, 0.5);">R13+</span>
 
             <p class="fs-5 mt-4">Chekout Film</p>
 
             <div class="form">
-                <form action="{{ route('films.chair') }}" method="POST">
-                    @csrf
+                <form action="{{ route('films.checkout', ['film' => $film->title]) }}">
                     <div class="mb-3">
                         <label for="ticket" class="form-label">Jam Tayang:</label>
                         <select class="form-select" name="jam_tayang" id="ticket">
