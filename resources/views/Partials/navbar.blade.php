@@ -8,11 +8,12 @@
                 <li><a href="{{ route('films.index') }}">Home</a></li>
                 <li><a href="#">Genre</a></li>
                 @auth
+
                     <li><a href="{{ route('dashboard.user.index') }}">Profile</a></li>
                     <li>
-                        <form action="{{ route('logout.logout') }}" method="POST">
+                        <form action="{{ route('logout.logout') }}" id="logoutform" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-hover"><span>Logout</span></button>
+                            <button type="button" class="btn btn-hover" id="btn-logout"><span>Logout</span></button>
                         </form>
                     </li>
                 @else

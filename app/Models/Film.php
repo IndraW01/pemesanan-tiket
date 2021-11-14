@@ -17,4 +17,12 @@ class Film extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function scopeFilter($query, array $filter)
+    {
+        if($filter['search'] ?? false) {
+            // dd($filter['search']);
+            return $query->where(fn($query) => $query->where('title', 'like', '%' . $filter['search'] . '%'));
+        }
+    }
 }

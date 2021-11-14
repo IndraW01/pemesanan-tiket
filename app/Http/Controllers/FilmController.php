@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 
 class FilmController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return  view('Films.index', [
-            'nows' => Film::where('playing', 'Now PLaying')->latest()->get(),
-            'comings' => Film::where('playing', 'Upcoming')->latest()->get()
+            'nows' => Film::where('playing', 'Now PLaying')->filter(request(['search']))->latest()->get(),
+            'comings' => Film::where('playing', 'Upcoming')->filter(request(['search']))->latest()->get()
         ]);
     }
 
@@ -43,7 +43,7 @@ class FilmController extends Controller
         return view('Films.checkout', [
             'film' => $film,
             'ticket' => $request->ticket,
-            'seatsA' => Seat::where('seat', 'A')->get()->pluck('no_bangku'),
+            'seatsA' => Seat::whereSeat('A')->get()->pluck('no_bangku'),
             'seatsB' => Seat::where('seat', 'B')->get()->pluck('no_bangku'),
         ]);
     }

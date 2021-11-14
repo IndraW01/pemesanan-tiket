@@ -222,6 +222,21 @@
             });
         @endif
 
+        $(document).on('click', '#btn-logout', function(e) {
+            Swal.fire({
+                title: 'Are you sure to Logout?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Logout!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#logoutform').submit();
+                }
+            })
+        });
 
     </script>
 </body>

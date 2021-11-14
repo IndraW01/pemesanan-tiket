@@ -10,9 +10,4 @@ class UserController extends Controller
     {
         return view('User.Profile.index');
     }
-
-    public function wallet()
-    {
-        return view('User.Wallet.index');
-    }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\FilmController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,5 +45,9 @@ Route::middleware('guest')->group(function () {
 Route::prefix('/dashboard/user')->middleware('auth')->name('dashboard.user.')->group(function() {
     Route::get('/', [DashboardUserController::class, 'index'])->name('index');
     Route::get('/profile', [UserController::class, 'index'])->name('profile');
-    Route::get('/wallet', [UserController::class, 'wallet'])->name('wallet');
+
+    Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
+    Route::post('/wallet', [WalletController::class, 'store'])->name('wallet.store');
+    Route::post('/wallet/topup', [WalletController::class, 'topup'])->name('wallet.topup');
 });
+

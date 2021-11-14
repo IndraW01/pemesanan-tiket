@@ -47,7 +47,7 @@
         <a class="nav-link collapsed text-white" href="{{ route('dashboard.user.wallet') }}" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wallet" style="color: #c0392b"></i>
-            <span>Wallet</span>
+            <span>E-Wallet</span>
         </a>
     </li>
 
