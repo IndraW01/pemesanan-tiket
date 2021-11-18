@@ -27,26 +27,34 @@
             <p class="fs-5 mt-4">Chekout Film</p>
 
             <div class="form">
-                <form action="">
+                <form action="{{ route('films.store', ['film' => $film->title]) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="jam_tayang" id="jam_tayang" value="{{ $jam_tayang }}">
+                    <input type="hidden" name="ticket" id="ticket" value="{{ $ticket }}">
                     <div class="mb-3 fs-5">
                         <p class="d-inline me-3">A</p>
-                        @foreach ($seatsA as $seatA)
+                        @foreach ($seatsA as $key => $seatA)
+                            {{-- @dump($key + 1) --}}
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="{{ $seatA }}" id="seats" value="{{ $seatA }}">
+                                <input class="form-check-input" type="checkbox" name="seat-{{ $key+1 }}" id="seats" value="{{ $seatA }}">
                                 <label class="form-check-label" for="seats">{{ $loop->iteration }}</label>
                             </div>
                         @endforeach
                     </div>
                     <div class="mb-3 fs-5">
                         <p class="d-inline me-3">B</p>
+                        @php
+                            $key = 6;
+                        @endphp
                         @foreach ($seatsB as $seatB)
+                        {{-- @dump($key++ ) --}}
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="{{ $seatB }}" id="seats" value="{{ $seatB }}">
+                                <input class="form-check-input" type="checkbox" name="seat-{{ $key++ }}" id="seats" value="{{ $seatB }}">
                                 <label class="form-check-label" for="seats">{{ $loop->iteration }}</label>
                             </div>
                         @endforeach
                     </div>
-                    <button type="submit" class="btn" style="background-color: #c0392b">Pesan</button>
+                    <button type="submit" class="btn" id="btn-checkout" style="background-color: #c0392b">Pesan</button>
                 </form>
             </div>
         </div>

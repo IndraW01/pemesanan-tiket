@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\LoginController;
@@ -28,7 +29,10 @@ Route::prefix('/films')->name('films.')->group(function() {
     Route::get('/{film:title}/schedule', [FilmController::class, 'schedule'])->name('schedule');
 });
 
-Route::get('/films/{film:title}/checkout', [FilmController::class, 'chair'])->middleware('auth')->name('films.checkout');
+Route::prefix('/films')->name('films.')->middleware('auth')->group(function() {
+    Route::get('/{film:title}/checkout', [FilmController::class, 'chair'])->name('checkout');
+    Route::post('/{film:title}/store', [FilmController::class, 'store'])->name('store');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login.index');
@@ -45,6 +49,8 @@ Route::middleware('guest')->group(function () {
 Route::prefix('/dashboard/user')->middleware('auth')->name('dashboard.user.')->group(function() {
     Route::get('/', [DashboardUserController::class, 'index'])->name('index');
     Route::get('/profile', [UserController::class, 'index'])->name('profile');
+
+    Route::get('booking', [BookingController::class, 'index'])->name('booking');
 
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
     Route::post('/wallet', [WalletController::class, 'store'])->name('wallet.store');

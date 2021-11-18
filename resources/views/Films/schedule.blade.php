@@ -1,4 +1,4 @@
-
+{{-- @dd($errors) --}}
 @extends('Layouts.main')
 
 @section('content')
@@ -33,15 +33,18 @@
                 <form action="{{ route('films.checkout', ['film' => $film->title]) }}">
                     <div class="mb-3">
                         <label for="ticket" class="form-label">Jam Tayang:</label>
-                        <select class="form-select" name="jam_tayang" id="ticket">
+                        <select class="form-select @error('jam_tayang') is-invalid @enderror" name="jam_tayang" id="ticket">
                             @foreach ($schedules as $schedule)
-                                @if ($dateNow > $schedule->schedule)
-                                    <option value="{{ $schedule->schedule }}" disabled>{{ $schedule->schedule }}</option>
-                                @else
+                                {{-- @if ($dateNow > $schedule->schedule) --}}
+                                    {{-- <option value="{{ $schedule->schedule }}" disabled>{{ $schedule->schedule }}</option> --}}
+                                {{-- @else --}}
                                     <option value="{{ $schedule->schedule }}">{{ $schedule->schedule }}</option>
-                                @endif
+                                {{-- @endif --}}
                             @endforeach
                         </select>
+                        @error('jam_tayang')
+                            <p class="text-danger"><small>{{ $message }}</small></p>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="ticket" class="form-label">Select Tickets:</label>

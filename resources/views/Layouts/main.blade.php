@@ -215,7 +215,9 @@
         @endif
 
         @if (request()->has('ticket'))
+            $('#btn-checkout').attr("disabled","disabled");
             $('input[type=checkbox]').on('change', function(evt) {
+                $('#btn-checkout').removeAttr("disabled","disabled");
                 if($('input[id=seats]:checked').length > {{ request('ticket') }}) {
                     this.checked = false;
                 }

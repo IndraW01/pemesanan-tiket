@@ -51,6 +51,15 @@
         </a>
     </li>
 
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item {{ request()->routeIs('dashboard.user.booking') ? 'active' : '' }}">
+        <a class="nav-link collapsed text-white" href="{{ route('dashboard.user.booking') }}" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-shopping-cart" style="color: #c0392b"></i>
+            <span>My-Bookingt</span>
+        </a>
+    </li>
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" style="background-color: #c0392b" id="sidebarToggle"></button>
