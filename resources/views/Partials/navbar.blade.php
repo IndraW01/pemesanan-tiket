@@ -8,8 +8,11 @@
                 <li><a href="{{ route('films.index') }}">Home</a></li>
                 <li><a href="#">Genre</a></li>
                 @auth
-
+                    @can('admin')
+                    <li><a href="{{ route('dashboard.admin.index') }}">Profile</a></li>
+                    @else
                     <li><a href="{{ route('dashboard.user.index') }}">Profile</a></li>
+                    @endcan
                     <li>
                         <form action="{{ route('logout.logout') }}" id="logoutform" method="POST">
                             @csrf

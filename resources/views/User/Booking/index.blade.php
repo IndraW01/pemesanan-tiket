@@ -28,6 +28,7 @@
                                 <th>Total</th>
                                 <th>Seat</th>
                                 <th>status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,10 +49,26 @@
                                         @endforelse
                                     </td>
                                     <td>{{ $booking->status }}</td>
+                                    @if ($booking->status === 'Belum Lunas')
+                                        <td>
+                                            <form action="{{ route('dashboard.user.booking.lunaskan', ['booking' => $booking->id]) }}" method="POST" id="lunaskan">
+                                                @csrf
+                                                <button type="button" id="btn-lunaskan" class="btn btn-warning">Lunaskan</button>
+                                            </form>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <form action="{{ route('dashboard.user.booking.destroy', ['booking' => $booking->id]) }}" method="POST" id="destroy">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" id="btn-destroy" class="btn btn-danger">Hapus</button>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8">Data Booking Kosong</td>
+                                    <td colspan="9" class="text-center">Data Booking Kosong</td>
                                 </tr>
                             @endforelse
                         </tbody>

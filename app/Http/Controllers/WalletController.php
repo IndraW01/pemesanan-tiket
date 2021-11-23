@@ -50,6 +50,10 @@ class WalletController extends Controller
             return redirect()->route('dashboard.user.wallet')->with(['status' => 'failed', 'value' => 'Top up minimum 10000']);
         }
 
+        if($request->saldo > 300000) {
+            return redirect()->route('dashboard.user.wallet')->with(['status' => 'failed', 'value' => 'Top up Maximal 300000']);
+        }
+
         $topupSaldo = $wallet['saldo'] + $request->saldo;
 
         $wallet->update([

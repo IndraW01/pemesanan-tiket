@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminFilmController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\LoginController;
@@ -8,17 +10,6 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 // Halaman Film
 Route::redirect('/', '/films');
@@ -46,14 +37,24 @@ Route::middleware('guest')->group(function () {
 
 
 // Halaman Dashboard User
-Route::prefix('/dashboard/user')->middleware('auth')->name('dashboard.user.')->group(function() {
+Route::prefix('/dashboard/user')->middleware('user')->name('dashboard.user.')->group(function() {
     Route::get('/', [DashboardUserController::class, 'index'])->name('index');
     Route::get('/profile', [UserController::class, 'index'])->name('profile');
 
     Route::get('booking', [BookingController::class, 'index'])->name('booking');
+    Route::post('booking/{booking}', [BookingController::class, 'lunaskan'])->name('booking.lunaskan');
+    Route::delete('booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
 
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
     Route::post('/wallet', [WalletController::class, 'store'])->name('wallet.store');
     Route::post('/wallet/topup', [WalletController::class, 'topup'])->name('wallet.topup');
+});
+
+// Halaman Dashboard Admin
+Route::prefix('/dashboard/admin')->middleware('admin')->name('dashboard.admin.')->group(function() {
+    Route::get('/', [DashboardAdminController::class, 'index'])->name('index');
+    Route::get('/profile', [UserController::class, 'index'])->name('profile');
+
+    Route::resource('/film', AdminFilmController::class)->names('film')->scoped(['film' => 'title']);
 });
 
