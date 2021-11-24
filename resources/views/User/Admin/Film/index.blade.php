@@ -41,8 +41,12 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('dashboard.admin.film.show', ['film' => $film->title]) }}" class="btn btn-success">Show</a>
-                                        <a href="" class="btn btn-warning">Update</a>
-                                        <a href="" class="btn btn-danger">Delete</a>
+                                        <a href="{{ route('dashboard.admin.film.edit', ['film' => $film->title]) }}" class="btn btn-warning">Update</a>
+                                        <form action="{{ route('dashboard.admin.film.destroy', ['film' => $film->title]) }}" method="POST" id="delete-film" class=" d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger" id="btn-delete-film">Hapus</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty

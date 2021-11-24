@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdminFilmRequest;
+use Exception;
+use App\Models\film;
 use App\Models\Category;
 use App\Models\CategoryFilm;
-use App\Models\film;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AdminFilmRequest;
+use Illuminate\Support\Facades\File;
 
 class AdminFilmController extends Controller
 {
@@ -74,16 +75,60 @@ class AdminFilmController extends Controller
 
     public function edit(film $film)
     {
-        //
+        return view('User.Admin.Film.edit', [
+            'film' => $film,
+            'categories' => Category::all()
+        ]);
     }
 
-    public function update(Request $request, film $film)
+    public function update(AdminFilmRequest $request, film $film)
     {
-        //
+        $sinopsis = preg_replace('#^<br>|</br>$#', '', $request->sinopsis);
+
+        try {
+            DB::beginTransaction();
+            if($request->hasFile('gambar')) {
+                File::delete('images/Upload/' . $film->gambar);
+
+                $extensi = $request->file('gambar')->getClientOriginalExtension();
+                $namaGambar = 'film-'.time().".$extensi";
+                $request->file('gambar')->move('images/Upload', $namaGambar);
+            }
+
+            $film->update([
+                'title' => $request->title,
+                'sinopsis' => $sinopsis,
+                'sutradara' => $request->sutradara,
+                'pemain' => $request->pemain,
+                'produksi' => $request->produksi,
+                'playing' => $request->playing,
+                'harga' => $request->harga,
+                'durasi' => $request->durasi,
+                'gambar' => $namaGambar ?? $film->gambar,
+            ]);
+
+            CategoryFilm::where('film_id', $film->id)->delete();
+
+            for ($i = 1; $i <= 5 ; $i++) {
+                if($request->input('category-'.$i)) {
+                    CategoryFilm::create([
+                        'film_id' => $film->id,
+                        'category_id' => $i
+                    ]);
+                }
+            }
+            DB::commit();
+            return redirect()->route('dashboard.admin.film.index')->with(['status' => 'success', 'value' => 'Film Berhasil Diubah!']);
+        } catch (Exception $exception) {
+            DB::rollBack();
+            echo $exception->getMessage();
+        }
     }
 
     public function destroy(film $film)
     {
-        //
+        film::destroy($film->id);
+
+        return redirect()->route('dashboard.admin.film.index')->with(['status' => 'success', 'value' => 'Film Berhasil dihapus!']);
     }
 }

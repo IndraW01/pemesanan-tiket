@@ -35,6 +35,10 @@ class FilmController extends Controller
 
     public function schedule(Film $film)
     {
+        if($film->playing != 'Now PLaying') {
+            abort(403);
+        }
+
         $dateTime = new DateTime();
 
         return view('Films.schedule', [
@@ -46,6 +50,9 @@ class FilmController extends Controller
 
     public function chair(Request $request, Film $film)
     {
+        if($film->playing != 'Now PLaying') {
+            abort(403);
+        }
 
         $Validator = Validator::make($request->all(),
         [

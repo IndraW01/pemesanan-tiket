@@ -170,6 +170,22 @@
                 }
             })
         });
+
+        $(document).on('click', '#btn-delete-film', function(e) {
+            Swal.fire({
+                title: 'Apakah anda ingin menghapus Film ?',
+                text: "Film anda akan dihapus",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#delete-film').submit();
+                }
+            })
+        });
     </script>
 
 </body>

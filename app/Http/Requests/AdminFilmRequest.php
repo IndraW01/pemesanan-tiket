@@ -24,7 +24,7 @@ class AdminFilmRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:films',
+            'title' => 'required|unique:films,title,' . request('id'),
             'sutradara' => 'required|max:255',
             'pemain' => 'required|max:255',
             'produksi' => 'required|max:255',
@@ -32,16 +32,12 @@ class AdminFilmRequest extends FormRequest
             'durasi' => 'required|numeric',
             'playing' => 'required|in:Now PLaying,Upcoming',
             'sinopsis' => 'required',
-            'gambar' => 'required|image|max:1024',
+            'gambar' => 'image|max:1024',
             'category-1' => '',
             'category-2' => '',
             'category-3' => '',
             'category-4' => '',
             'category-5' => '',
         ];
-    }
-
-    public function update($id) {
-        return $id;
     }
 }

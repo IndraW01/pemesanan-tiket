@@ -18,7 +18,9 @@
     <div class="row justify-content-center align-items-center">
         <div class="col-md-4">
             <img src="/images/cartoons/demon-slayer.jpg" alt="" width="287" height="421">
-            <a href="{{ route('films.schedule', ['film' => $film->title]) }}" class="btn buy">Buy Ticket</a>
+            @if ($film->playing == 'Now PLaying')
+                <a href="{{ route('films.schedule', ['film' => $film->title]) }}" class="btn buy">Buy Ticket</a>
+            @endif
         </div>
         <div class="col-md-6">
             <h3 class="mb-3 title-show">{{ $film->title }}</h3>
