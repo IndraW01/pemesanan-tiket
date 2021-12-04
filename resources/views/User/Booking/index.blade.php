@@ -51,18 +51,20 @@
                                     <td>{{ $booking->status }}</td>
                                     @if ($booking->status === 'Belum Lunas')
                                         <td>
-                                            <form action="{{ route('dashboard.user.booking.lunaskan', ['booking' => $booking->id]) }}" method="POST" id="lunaskan">
+                                            <form action="{{ route('dashboard.user.booking.lunaskan', ['booking' => $booking->id]) }}" method="POST" id="lunaskan" class="mb-2">
                                                 @csrf
                                                 <button type="button" id="btn-lunaskan" class="btn btn-warning">Lunaskan</button>
                                             </form>
+                                            <a href="#" class="btn btn-success disabled">Cetak</a>
                                         </td>
                                     @else
                                         <td>
-                                            <form action="{{ route('dashboard.user.booking.destroy', ['booking' => $booking->id]) }}" method="POST" id="destroy">
+                                            <form action="{{ route('dashboard.user.booking.destroy', ['booking' => $booking->id]) }}" method="POST" id="destroy" class="mb-2">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" id="btn-destroy" class="btn btn-danger">Hapus</button>
                                             </form>
+                                            <a href="{{ route('dashboard.user.booking.cetak', ['booking' => $booking->id]) }}" target="_blank" class="btn btn-success">Cetak</a>
                                         </td>
                                     @endif
                                 </tr>

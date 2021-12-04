@@ -15,6 +15,7 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validateData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|unique:users|email',
@@ -22,6 +23,8 @@ class RegisterController extends Controller
         ]);
 
         $validateData['password'] = Hash::make($request->password);
+        $validateData['is_admin'] = false;
+        // dd($validateData);
 
         User::create($validateData);
 

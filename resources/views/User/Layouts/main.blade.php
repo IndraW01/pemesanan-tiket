@@ -186,6 +186,25 @@
                 }
             })
         });
+
+        $(document).on('click', '#btn-start', function(e) {
+            e.preventDefault();
+            var link = $(this).attr('href');
+
+            Swal.fire({
+                title: 'Apakah anda yakin ingin start Film',
+                text: "Film Akan di Start",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Start it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                   window.location = link;
+                }
+            })
+        })
     </script>
 
 </body>

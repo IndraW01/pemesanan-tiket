@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use App\Models\Booking;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Auth;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +26,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $statuses = Booking::where('status', 'Belum Lunas')->get();
+            foreach($statuses as $status) {
+                if($status->status == 'Belum Lunas') {
+                    $schedule->call(function () use($status) {
+                        $status->delete();
+                    })->everyTenMinutes();
+                }
+            }
     }
 
     /**

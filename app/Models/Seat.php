@@ -10,4 +10,11 @@ class Seat extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $with = ['userseats'];
+
+    public function userseats()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

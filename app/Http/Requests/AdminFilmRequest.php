@@ -32,7 +32,7 @@ class AdminFilmRequest extends FormRequest
             'durasi' => 'required|numeric',
             'playing' => 'required|in:Now PLaying,Upcoming',
             'sinopsis' => 'required',
-            'gambar' => 'image|max:1024',
+            'gambar' => 'image|max:2024',
             'category-1' => '',
             'category-2' => '',
             'category-3' => '',

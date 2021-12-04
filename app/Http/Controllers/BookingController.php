@@ -8,6 +8,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
+
 
 class BookingController extends Controller
 {
@@ -21,7 +24,11 @@ class BookingController extends Controller
     public function lunaskan(Booking $booking)
     {
         $total = $booking->total;
-        $saldo = Auth::user()->wallet->saldo;
+        $saldo = Auth::user()->wallet->saldo ?? $error = true;
+
+        if(isset($error)) {
+            return back()->with(['status' => 'failed', 'value' => 'Register E-Wallet Terlebih dahulu']);
+        }
 
         if($total > $saldo) {
             return back()->with(['status' => 'failed', 'value' => 'Saldo anda Kurang']);
@@ -61,5 +68,28 @@ class BookingController extends Controller
             DB::rollBack();
             return back()->with(['status' => 'failed', 'value' => 'Transaksi Anda gagal dihapus']);
         }
+    }
+
+    public function cetak(Booking $booking)
+    {
+        if($booking->user_id != Auth::user()->id) {
+            abort(403);
+        }
+        $html =  view('User.Booking.cetak', [
+            'booking' => $booking
+        ]);
+
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream("Tikect {$booking->film->title}", ['Attachment' => false]);
     }
 }

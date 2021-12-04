@@ -29,7 +29,9 @@ class AdminFilmController extends Controller
 
     public function store(AdminFilmRequest $request)
     {
-        $sinopsis = preg_replace('#^<br>|</br>$#', '', $request->sinopsis);
+        $sinopsis = preg_replace('/<br>/', '<p></p>', $request->sinopsis);
+        $sinopsis = preg_replace('/<div>/', '<p>', $sinopsis);
+        $sinopsis = preg_replace('#</div>#', '</p>', $sinopsis);
         // dd($sinopsis);
         try {
             DB::beginTransaction();
@@ -130,5 +132,14 @@ class AdminFilmController extends Controller
         film::destroy($film->id);
 
         return redirect()->route('dashboard.admin.film.index')->with(['status' => 'success', 'value' => 'Film Berhasil dihapus!']);
+    }
+
+    public function start(film $film)
+    {
+        $film->update([
+            'playing' => 'Now PLaying'
+        ]);
+
+        return redirect()->route('dashboard.admin.film.index')->with(['status' => 'success', 'value' => 'Film Berhasil diStart!']);
     }
 }

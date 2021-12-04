@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AdminFilmController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\DashboardAdminController;
-use App\Http\Controllers\DashboardUserController;
-use App\Http\Controllers\FilmController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WalletController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FilmController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminFilmController;
+use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\DashboardAdminController;
 
 // Halaman Film
 Route::redirect('/', '/films');
@@ -22,7 +23,7 @@ Route::prefix('/films')->name('films.')->group(function() {
 
 Route::prefix('/films')->name('films.')->middleware('auth')->group(function() {
     Route::get('/{film:title}/checkout', [FilmController::class, 'chair'])->name('checkout');
-    Route::post('/{film:title}/store', [FilmController::class, 'store'])->name('store');
+    Route::post('/{film:title}/store', [FilmController::class, 'store'])->name('store')->middleware('user');
 });
 
 Route::middleware('guest')->group(function () {
@@ -44,6 +45,7 @@ Route::prefix('/dashboard/user')->middleware('user')->name('dashboard.user.')->g
     Route::get('booking', [BookingController::class, 'index'])->name('booking');
     Route::post('booking/{booking}', [BookingController::class, 'lunaskan'])->name('booking.lunaskan');
     Route::delete('booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+    Route::get('/booking/{booking}/cetak', [BookingController::class, 'cetak'])->name('booking.cetak');
 
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
     Route::post('/wallet', [WalletController::class, 'store'])->name('wallet.store');
@@ -56,5 +58,5 @@ Route::prefix('/dashboard/admin')->middleware('admin')->name('dashboard.admin.')
     Route::get('/profile', [UserController::class, 'index'])->name('profile');
 
     Route::resource('/film', AdminFilmController::class)->names('film')->scoped(['film' => 'title']);
+    Route::get('/film/{film:title}/start', [AdminFilmController::class, 'start'])->name('film.start');
 });
-

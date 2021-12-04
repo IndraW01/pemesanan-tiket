@@ -34,9 +34,9 @@
                                     <td>{{ $film->title }}</td>
                                     <td>
                                         @if ($film->playing == 'Now PLaying')
-                                            <a href="" class="btn btn-primary disabled">Start</a>
+                                            <a href="#" class="btn btn-primary disabled">Start</a>
                                         @else
-                                            <a href="#" class="btn btn-primary">Start</a>
+                                            <a href="{{ route('dashboard.admin.film.start', ['film' => $film->title]) }}" id="btn-start" class="btn btn-primary">Start</a>
                                         @endif
                                     </td>
                                     <td>

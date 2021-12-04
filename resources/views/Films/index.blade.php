@@ -26,7 +26,7 @@
             @forelse ($nows as $now)
             <!-- MOVIE ITEM -->
             <a href="{{ route('films.show', ['film' => $now->title]) }}" class="movie-item">
-                <img src="/images/movies/theatre-dead.jpg" alt="">
+                <img src="{{ asset('images/Upload/' . $now->gambar) }}" alt="">
                 <div class="movie-item-content">
                     <div class="movie-item-title">
                         {{ $now->title }}
@@ -34,13 +34,11 @@
                     <div class="movie-infos">
                         <div class="movie-info">
                             <i class="bx bxs-time"></i>
-                            <span>120 mins</span>
+                            <span>{{ $now->durasi }} min</span>
                         </div>
                         <div class="movie-info">
-                            <span>HD</span>
-                        </div>
-                        <div class="movie-info">
-                            <span>16+</span>
+                            <i class='bx bx-money'></i>
+                            <span>Rp {{ $now->harga }}</span>
                         </div>
                     </div>
                 </div>
@@ -64,25 +62,19 @@
             @forelse($comings as $coming)
             <!-- MOVIE ITEM -->
             <a href="{{ route('films.show', ['film' => $coming->title]) }}" class="movie-item">
-                <img src="/images/cartoons/demon-slayer.jpg" alt="">
+                <img src="{{ asset('images/Upload/' . $coming->gambar) }}" alt="">
                 <div class="movie-item-content">
                     <div class="movie-item-title">
                         {{ $coming->title }}
                     </div>
                     <div class="movie-infos">
                         <div class="movie-info">
-                            <i class="bx bxs-star"></i>
-                            <span>9.5</span>
-                        </div>
-                        <div class="movie-info">
                             <i class="bx bxs-time"></i>
-                            <span>120 mins</span>
+                            <span>{{ $coming->durasi }} min</span>
                         </div>
                         <div class="movie-info">
-                            <span>HD</span>
-                        </div>
-                        <div class="movie-info">
-                            <span>16+</span>
+                            <i class='bx bx-money'></i>
+                            <span>Rp {{ $coming->harga }}</span>
                         </div>
                     </div>
                 </div>

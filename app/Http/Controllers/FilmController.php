@@ -66,10 +66,39 @@ class FilmController extends Controller
             return back()->withErrors($Validator)->withInput();
         }
 
+        $schedule = Schedule::where('schedule', $request->jam_tayang)->select('id')->first();
+
+        $bookingsFilm = Booking::where('film_id', $film->id)->where(function($query) use ($schedule) {
+            $query->where('schedule_id', $schedule->id);
+        })->get();
+
+        if($bookingsFilm->count() > 0) {
+            $simpan1 = null;
+            foreach($bookingsFilm as $bookingFilm) {
+                // dd($bookingFilm);
+                $simpan2 = [];
+
+                $seatUsers = $bookingFilm->seats;
+                foreach($seatUsers as $seatUser) {
+                    $simpan2[] = $seatUser->seat->no_bangku;
+                }
+
+                $simpan1[] = $simpan2;
+            }
+            $seat = [];
+            foreach($simpan1 as $simpan) {
+                foreach($simpan as $s) {
+                    $seat[] = $s;
+                }
+            }
+        }
+
+
         return view('Films.checkout', [
             'film' => $film,
             'jam_tayang' => $request->jam_tayang,
             'ticket' => $request->ticket,
+            'seatBookings' => $seat ?? [],
             'seatsA' => Seat::whereSeat('A')->get()->pluck('no_bangku'),
             'seatsB' => Seat::where('seat', 'B')->get()->pluck('no_bangku'),
         ]);
