@@ -5,7 +5,7 @@
             @foreach ($nows->take(3) as $now)
                 <!-- SLIDE ITEM -->
                 <div class="hero-slide-item">
-                    <img src="/images/black-banner.png" alt="">
+                    <img src="{{ asset('images/banner.jpg') }}" alt="">
                     <div class="overlay"></div>
                     <div class="hero-slide-item-content">
                         <div class="item-content-wraper">

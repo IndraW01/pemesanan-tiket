@@ -16,7 +16,7 @@
 
     <div class="row justify-content-center align-items-center">
         <div class="col-md-4">
-            <img src="/images/cartoons/demon-slayer.jpg" alt="" width="247" height="381">
+            <img src="{{ asset('images/Upload/' . $film->gambar) }}" alt="" width="247" height="381">
         </div>
         <div class="col-md-4">
             <h3 class="mb-3 text-white">{{ $film->title }}</h3>

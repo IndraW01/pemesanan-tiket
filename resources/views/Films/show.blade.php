@@ -17,7 +17,7 @@
 
     <div class="row justify-content-center align-items-center">
         <div class="col-md-4">
-            <img src="/images/cartoons/demon-slayer.jpg" alt="" width="287" height="421">
+            <img src="{{ asset('images/Upload/' . $film->gambar) }}" alt="" width="287" height="421">
             @if ($film->playing == 'Now PLaying')
                 <a href="{{ route('films.schedule', ['film' => $film->title]) }}" class="btn buy">Buy Ticket</a>
             @endif

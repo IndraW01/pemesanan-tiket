@@ -22,8 +22,8 @@ class WalletController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'no_hp' => 'required|numeric',
-            'pin' => 'required|size:4'
+            'no_hp' => 'required|numeric|unique:wallets',
+            'pin' => 'required|size:4|unique:wallets'
         ]);
 
         $validateData['user_id'] = Auth::user()->id;

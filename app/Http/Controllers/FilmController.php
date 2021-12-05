@@ -50,13 +50,19 @@ class FilmController extends Controller
 
     public function chair(Request $request, Film $film)
     {
+        // dd($request->jam_tayang);
+        if(!in_array($request->jam_tayang, ['13.30', '16.30', '19.30']) || !in_array($request->ticket, [1,2,3,4,5])) {
+            abort(403);
+        }
+
         if($film->playing != 'Now PLaying') {
             abort(403);
         }
 
         $Validator = Validator::make($request->all(),
         [
-            'jam_tayang' => 'required'
+            'jam_tayang' => 'required',
+            'ticket' => 'required|numeric'
         ],
         [
             'required' => 'Jam Tayang Tidak ada'
