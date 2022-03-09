@@ -12,16 +12,19 @@
                     <a href="{{ route('dashboard.admin.film.index') }}" class="btn btn-primary"><i class="fas fa-fw fa-undo-alt"></i></a>
                 </div>
                <div class="crud">
-                   <a href="" class="btn btn-success {{ $film->playing=='Now PLaying'?'disabled':'' }}"><i class="fas fa-fw fa-play-circle"></i> Start</a>
-                   <a href="" class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i> Tambah</a>
-                   <a href="" class="btn btn-warning"><i class="fas fa-fw fa-pen-square"></i> Edit</a>
-                   <a href="" class="btn btn-danger"><i class="fas fa-fw fa-trash"></i> Hapus</a>
+                   <a href="{{ route('dashboard.admin.film.start', ['film' => $film->title]) }}" id="btn-start" class="btn btn-success {{ $film->playing=='Now PLaying'?'disabled':'' }}"><i class="fas fa-fw fa-play-circle"></i> Start</a>
+                   <a href="{{ route('dashboard.admin.film.edit', ['film' => $film->title]) }}" class="btn btn-warning"><i class="fas fa-fw fa-pen-square"></i> Edit</a>
+                   <form action="{{ route('dashboard.admin.film.destroy', ['film' => $film->title]) }}" method="POST" id="delete-film" class=" d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="btn btn-danger" id="btn-delete-film"><i class="fas fa-fw fa-trash"></i> Hapus</button>
+                </form>
                </div>
             </div>
             <div class="card-body">
                 <div class="row justify-content-between">
                     <div class="col-md-4">
-                        <img src="/images/cartoons/demon-slayer.jpg" alt="" width="287" height="421">
+                        <img src="{{ asset('images/Upload/' . $film->gambar) }}" class=" img-thumbnail" alt="" width="287" height="421">
                     </div>
                     <div class="col-md-8">
                         <h3 class="mb-3 title-show">{{ $film->title }}</h3>

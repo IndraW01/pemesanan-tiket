@@ -23,13 +23,23 @@
     <div class="col-md-6">
         <div class="card mb-4">
             <div class="card-header">
-                Topup E-Wallet
+                Ubah Pin E-Wallet
             </div>
             <div class="card-body">
-                <form action="{{ route('dashboard.user.wallet.topup') }}" method="POST">
+                <form action="{{ route('dashboard.user.wallet.update', ['wallet' => $wallet->no_hp]) }}" method="POST">
                     @csrf
+                    @method('PATCH')
                     <div class="mb-3">
-                        <label for="pin" class="form-label">Pin</label>
+                        <label for="pinlama" class="form-label">Pin Lama</label>
+                        <input type="number" class="form-control @error('pinlama') is-invalid @enderror" name="pinlama" id="pinlama">
+                        @error('pinlama')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="pin" class="form-label">Pin Baru</label>
                         <input type="number" class="form-control @error('pin') is-invalid @enderror" name="pin" id="pin">
                         @error('pin')
                             <div class="invalid-feedback">
@@ -38,16 +48,16 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="saldo" class="form-label">Saldo</label>
-                        <input type="number" class="form-control @error('saldo') is-invalid @enderror" name="saldo" id="saldo">
-                        @error('saldo')
+                        <label for="pin_confirmation" class="form-label">Pin Konfirmasi</label>
+                        <input type="number" class="form-control @error('pin_confirmation') is-invalid @enderror" name="pin_confirmation" id="pin_confirmation">
+                        @error('pin_confirmation')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn text-white" style="background-color: #c0392b">Top Up</button>
-                    <a href="{{ route('dashboard.user.wallet.edit', ['wallet' => $wallet->no_hp]) }}" class="btn btn-warning">Ubah Pin</a>
+                    <button type="submit" class="btn text-white" style="background-color: #c0392b">Ubah</button>
+                    <a href="{{ route('dashboard.user.wallet') }}" class="btn btn-warning">Kembali</a>
                   </form>
             </div>
         </div>

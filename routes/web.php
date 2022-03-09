@@ -49,6 +49,8 @@ Route::prefix('/dashboard/user')->middleware('user')->name('dashboard.user.')->g
 
     Route::get('/wallet', [WalletController::class, 'index'])->name('wallet');
     Route::post('/wallet', [WalletController::class, 'store'])->name('wallet.store');
+    Route::get('/wallet/{wallet:no_hp}/edit', [WalletController::class, 'edit'])->name('wallet.edit');
+    Route::patch('/wallet/{wallet:no_hp}', [WalletController::class, 'update'])->name('wallet.update');
     Route::post('/wallet/topup', [WalletController::class, 'topup'])->name('wallet.topup');
 });
 

@@ -23,21 +23,40 @@ class AdminFilmRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'required|unique:films,title,' . request('id'),
-            'sutradara' => 'required|max:255',
-            'pemain' => 'required|max:255',
-            'produksi' => 'required|max:255',
-            'harga' => 'required|numeric',
-            'durasi' => 'required|numeric',
-            'playing' => 'required|in:Now PLaying,Upcoming',
-            'sinopsis' => 'required',
-            'gambar' => 'image|max:2024',
-            'category-1' => '',
-            'category-2' => '',
-            'category-3' => '',
-            'category-4' => '',
-            'category-5' => '',
-        ];
+        if($this->method() == 'POST') {
+            return [
+                'title' => 'required|unique:films,title,' . request('id'),
+                'sutradara' => 'required|max:255',
+                'pemain' => 'required|max:255',
+                'produksi' => 'required|max:255',
+                'harga' => 'required|numeric|min:0',
+                'durasi' => 'required|numeric|min:0',
+                'playing' => 'in:Now PLaying,Upcoming',
+                'sinopsis' => 'required',
+                'gambar' => 'required|image|max:2024',
+                'category-1' => '',
+                'category-2' => '',
+                'category-3' => '',
+                'category-4' => '',
+                'category-5' => '',
+            ];
+        } else {
+            return [
+                'title' => 'required|unique:films,title,' . request('id'),
+                'sutradara' => 'required|max:255',
+                'pemain' => 'required|max:255',
+                'produksi' => 'required|max:255',
+                'harga' => 'required|numeric|min:0',
+                'durasi' => 'required|numeric|min:0',
+                'playing' => 'in:Now PLaying,Upcoming',
+                'sinopsis' => 'required',
+                'gambar' => 'image|max:2024',
+                'category-1' => '',
+                'category-2' => '',
+                'category-3' => '',
+                'category-4' => '',
+                'category-5' => '',
+            ];
+        }
     }
 }

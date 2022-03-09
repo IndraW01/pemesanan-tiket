@@ -33,6 +33,36 @@ class WalletController extends Controller
         return redirect()->route('dashboard.user.wallet')->with(['status' => 'success', 'value' => 'E-Wallet created successfully']);
     }
 
+    public function edit(Wallet $wallet)
+    {
+        if(Auth::user()->wallet->no_hp != $wallet->no_hp) {
+            abort(403);
+        }
+
+        // dd(Auth::user()->wallet);
+        return view('User.Wallet.edit', [
+            'wallet' => Auth::user()->wallet
+        ]);
+    }
+
+    public function update(Request $request, Wallet $wallet)
+    {
+        $request->validate([
+            'pinlama' => 'required|size:4',
+            'pin' => 'required|size:4|confirmed|unique:wallets,pin,' . $wallet->id
+        ]);
+
+        if($wallet->pin != $request->pinlama) {
+            return back()->with(['status' => 'failed', 'value' => 'Pin Lama Anda Salah']);
+        }
+
+        $wallet->update([
+            'pin' => $request->pin
+        ]);
+
+        return redirect()->route('dashboard.user.wallet')->with(['status' => 'success', 'value' => 'Pin Berhasil diubah']);
+    }
+
     public function topup(Request $request)
     {
         $validateData = $request->validate([

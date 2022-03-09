@@ -71,10 +71,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="playing" class="form-label">Playing</label>
+                        @if ($film->playing == 'Now PLaying')
+                        <select class="form-select @error('playing') is-invalid @enderror" name="playing" id="playing" disabled>
+                            <option value="Now PLaying" {{ old('playing', $film->playing) == 'Now PLaying' ? 'selected' : '' }}>Now Playing</option>
+                            <option value="Upcoming" {{ old('playing', $film->playing) == 'Upcoming' ? 'selected' : '' }}>Upcoming</option>
+                        </select>
+                        @else
                         <select class="form-select @error('playing') is-invalid @enderror" name="playing" id="playing">
                             <option value="Now PLaying" {{ old('playing', $film->playing) == 'Now PLaying' ? 'selected' : '' }}>Now Playing</option>
                             <option value="Upcoming" {{ old('playing', $film->playing) == 'Upcoming' ? 'selected' : '' }}>Upcoming</option>
                         </select>
+                        @endif
                         @error('playing')
                             <div class="invalid-feedback">
                                 {{ $message }}

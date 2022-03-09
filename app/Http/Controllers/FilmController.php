@@ -112,8 +112,14 @@ class FilmController extends Controller
 
     public function store(Film $film, Request $request)
     {
-        DB::beginTransaction();
+        // dd($request->all());
+        $request->validate([
+            'seat' => 'required'
+        ]);
+
         try {
+            DB::beginTransaction();
+            // dd($request->all());
             $booking = Booking::create([
                 'user_id' => Auth::user()->id,
                 'film_id' => $film->id,
@@ -122,14 +128,12 @@ class FilmController extends Controller
                 'total' => $film->harga * $request->ticket
             ]);
 
-            for($i = 1; $i <= 10; $i++) {
-                if($request->input('seat-'.$i)) {
-                    SeatUser::create([
-                        'user_id' => Auth::user()->id,
-                        'seat_id' => Seat::where('no_bangku', $request->input('seat-'.$i))->pluck('id')->first(),
-                        'booking_id' => $booking->id
-                    ]);
-                }
+            foreach($request->seat as $seat){
+                SeatUser::create([
+                    'user_id' => Auth::user()->id,
+                    'seat_id' => Seat::where('no_bangku', $seat)->pluck('id')->first(),
+                    'booking_id' => $booking->id
+                ]);
             }
             DB::commit();
         } catch (Exception $message) {

@@ -1,6 +1,7 @@
 {{-- @dd($ticket) --}}
 {{-- @dd($seatsA) --}}
 {{-- @dd($seatBookings) --}}
+{{-- @dd($errors); --}}
 @extends('Layouts.main')
 
 @section('content')
@@ -27,6 +28,7 @@
 
             <p class="fs-5 mt-4">Chekout Film</p>
 
+
             <div class="form">
                 <form action="{{ route('films.store', ['film' => $film->title]) }}" method="POST">
                     @csrf
@@ -37,12 +39,12 @@
                         @foreach ($seatsA as $key => $seatA)
                             @if (in_array($seatA, $seatBookings))
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="seat-{{ $key+1 }}" id="seats" value="{{ $seatA }}" disabled>
+                                    <input class="form-check-input" type="checkbox" name="seat[]" id="seats" value="{{ $seatA }}" disabled>
                                     <label class="form-check-label" for="seats">{{ $loop->iteration }}</label>
                                 </div>
                             @else
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="seat-{{ $key+1 }}" id="seats" value="{{ $seatA }}">
+                                    <input class="form-check-input" type="checkbox" name="seat[]" id="seats" value="{{ $seatA }}">
                                     <label class="form-check-label" for="seats">{{ $loop->iteration }}</label>
                                 </div>
                             @endif
@@ -56,19 +58,23 @@
                         @foreach ($seatsB as $seatB)
                         @if (in_array($seatB, $seatBookings))
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="seat-{{ $key++ }}" id="seats" value="{{ $seatB }}" disabled>
+                                <input class="form-check-input" type="checkbox" name="seat[]" id="seats" value="{{ $seatB }}" disabled>
                                 <label class="form-check-label" for="seats">{{ $loop->iteration }}</label>
                             </div>
                         @else
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="seat-{{ $key++ }}" id="seats" value="{{ $seatB }}">
+                                <input class="form-check-input" type="checkbox" name="seat[]" id="seats" value="{{ $seatB }}">
                                 <label class="form-check-label" for="seats">{{ $loop->iteration }}</label>
                             </div>
                         @endif
                         @endforeach
                     </div>
+                    @error('seat')
+                        <p class=" text-danger">Isi Bangku mu</p>
+                    @enderror
                     <button type="submit" class="btn" id="btn-checkout" style="background-color: #c0392b">Pesan</button>
                 </form>
+
             </div>
         </div>
     </div>

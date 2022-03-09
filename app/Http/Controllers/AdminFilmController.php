@@ -29,10 +29,12 @@ class AdminFilmController extends Controller
 
     public function store(AdminFilmRequest $request)
     {
+        // dd($request->method());
         $sinopsis = preg_replace('/<br>/', '<p></p>', $request->sinopsis);
         $sinopsis = preg_replace('/<div>/', '<p>', $sinopsis);
         $sinopsis = preg_replace('#</div>#', '</p>', $sinopsis);
         // dd($sinopsis);
+
         try {
             DB::beginTransaction();
             if($request->hasFile('gambar')) {
@@ -103,7 +105,7 @@ class AdminFilmController extends Controller
                 'sutradara' => $request->sutradara,
                 'pemain' => $request->pemain,
                 'produksi' => $request->produksi,
-                'playing' => $request->playing,
+                'playing' => $request->playing ?? $film->playing,
                 'harga' => $request->harga,
                 'durasi' => $request->durasi,
                 'gambar' => $namaGambar ?? $film->gambar,
@@ -129,6 +131,7 @@ class AdminFilmController extends Controller
 
     public function destroy(film $film)
     {
+        // dd($film);
         film::destroy($film->id);
 
         return redirect()->route('dashboard.admin.film.index')->with(['status' => 'success', 'value' => 'Film Berhasil dihapus!']);

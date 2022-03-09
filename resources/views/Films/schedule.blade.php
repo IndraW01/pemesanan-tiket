@@ -31,7 +31,6 @@
 
             <div class="form">
                 <form action="{{ route('films.checkout', ['film' => $film->title]) }}">
-                    @csrf
                     <div class="mb-3">
                         <label for="ticket" class="form-label">Jam Tayang:</label>
                         <select class="form-select @error('jam_tayang') is-invalid @enderror" name="jam_tayang" id="ticket">

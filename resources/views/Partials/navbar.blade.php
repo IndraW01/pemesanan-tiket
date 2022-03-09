@@ -6,7 +6,6 @@
             </a>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="{{ route('films.index') }}">Home</a></li>
-                <li><a href="#">Genre</a></li>
                 @auth
                     @can('admin')
                     <li><a href="{{ route('dashboard.admin.index') }}">Profile</a></li>
